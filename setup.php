@@ -64,11 +64,13 @@ function plugin_init_mydashboard() {
             $PLUGIN_HOOKS['menu_toadd']['mydashboard'] = array('tools' => 'PluginMydashboardMenu');
             $PLUGIN_HOOKS['helpdesk_menu_entry']['mydashboard'] = '/front/menu.php';
             
-            if (isset($_SESSION["glpi_plugin_mydashboard_loaded"]) 
-                && $_SESSION["glpi_plugin_mydashboard_loaded"] == 0
-                ) {
-                $_SESSION["glpi_plugin_mydashboard_loaded"] = 1;
-                Html::redirect($CFG_GLPI['root_doc']."/plugins/mydashboard/front/menu.php");
+            if(strpos($_SERVER['REQUEST_URI'], 'central.php?redirect') === false ){
+               if (isset($_SESSION["glpi_plugin_mydashboard_loaded"]) 
+                   && $_SESSION["glpi_plugin_mydashboard_loaded"] == 0
+                   ) {
+                   $_SESSION["glpi_plugin_mydashboard_loaded"] = 1;
+                   Html::redirect($CFG_GLPI['root_doc']."/plugins/mydashboard/front/menu.php");
+               }
             }
             
             if (PluginMydashboardHelper::getReplaceCentral() 
